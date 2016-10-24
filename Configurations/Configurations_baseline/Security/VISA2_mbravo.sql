@@ -1,0 +1,2 @@
+﻿CREATE USER [VISA2\mbravo] FOR LOGIN [VISA2\mbravo];
+

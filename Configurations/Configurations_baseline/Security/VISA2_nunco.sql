@@ -1,0 +1,2 @@
+﻿CREATE USER [VISA2\nunco] FOR LOGIN [VISA2\nunco];
+

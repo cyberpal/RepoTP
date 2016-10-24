@@ -1,0 +1,2 @@
+﻿CREATE USER [BANELCO\palvarez] FOR LOGIN [BANELCO\palvarez];
+

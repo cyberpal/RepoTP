@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[Plazo_Liberacion] (
+    [id_plazo_liberacion]     INT          IDENTITY (1, 1) NOT NULL,
+    [id_tipo_medio_pago]      INT          NULL,
+    [id_medio_pago]           INT          NULL,
+    [id_tipo_cuenta]          INT          NULL,
+    [id_cuenta]               INT          NULL,
+    [id_grupo_rubro]          INT          NULL,
+    [id_rubro]                INT          NULL,
+    [plazo_liberacion]        INT          NOT NULL,
+    [plazo_liberacion_cuotas] INT          NULL,
+    [flag_permite_baja]       BIT          NOT NULL,
+    [fecha_alta]              DATETIME     NOT NULL,
+    [usuario_alta]            VARCHAR (20) NOT NULL,
+    [fecha_modificacion]      DATETIME     NULL,
+    [usuario_modificacion]    VARCHAR (20) NULL,
+    [fecha_baja]              DATETIME     NULL,
+    [usuario_baja]            VARCHAR (20) NULL,
+    [version]                 INT          CONSTRAINT [DF_Plazo_Liberacion_version] DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_Plazo_Liberacion] PRIMARY KEY CLUSTERED ([id_plazo_liberacion] ASC),
+    CONSTRAINT [fk_plazo_liberacion_id_cuenta] FOREIGN KEY ([id_cuenta]) REFERENCES [dbo].[Cuenta] ([id_cuenta]),
+    CONSTRAINT [fk_plazo_liberacion_id_grupo_rubro] FOREIGN KEY ([id_grupo_rubro]) REFERENCES [dbo].[Grupo_Rubro] ([id_grupo_rubro]),
+    CONSTRAINT [fk_plazo_liberacion_id_medio_pago] FOREIGN KEY ([id_medio_pago]) REFERENCES [dbo].[Medio_De_Pago] ([id_medio_pago]),
+    CONSTRAINT [fk_plazo_liberacion_id_rubro] FOREIGN KEY ([id_rubro]) REFERENCES [dbo].[Rubro] ([id_rubro]),
+    CONSTRAINT [fk_plazo_liberacion_id_tipo_cuenta] FOREIGN KEY ([id_tipo_cuenta]) REFERENCES [dbo].[Tipo] ([id_tipo]),
+    CONSTRAINT [fk_plazo_liberacion_id_tipo_medio_pago] FOREIGN KEY ([id_tipo_medio_pago]) REFERENCES [dbo].[Tipo_Medio_Pago] ([id_tipo_medio_pago])
+);
+

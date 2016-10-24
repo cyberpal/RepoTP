@@ -1,0 +1,2 @@
+﻿CREATE USER [BANELCO\ellopis] FOR LOGIN [BANELCO\ellopis];
+

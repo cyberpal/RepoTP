@@ -1,0 +1,2 @@
+﻿CREATE USER [VISA2\Imple_SQL] FOR LOGIN [VISA2\Imple_SQL];
+

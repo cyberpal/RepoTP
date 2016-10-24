@@ -1,0 +1,2 @@
+﻿CREATE USER [BANELCO\jbednarz] FOR LOGIN [BANELCO\jbednarz];
+

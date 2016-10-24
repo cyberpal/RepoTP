@@ -1,0 +1,2 @@
+﻿CREATE USER [BANELCO\LRibles] FOR LOGIN [BANELCO\LRibles];
+

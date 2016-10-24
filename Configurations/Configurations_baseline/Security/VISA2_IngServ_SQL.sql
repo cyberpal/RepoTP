@@ -1,0 +1,2 @@
+﻿CREATE USER [VISA2\IngServ_SQL] FOR LOGIN [VISA2\IngServ_SQL];
+

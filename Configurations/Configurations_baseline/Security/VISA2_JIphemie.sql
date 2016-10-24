@@ -1,0 +1,2 @@
+﻿CREATE USER [VISA2\JIphemie] FOR LOGIN [VISA2\JIphemie];
+
