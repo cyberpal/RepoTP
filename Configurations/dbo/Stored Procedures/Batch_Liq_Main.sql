@@ -16,7 +16,7 @@
 				•	Actualización del saldo en cuenta
 
 	Modificaciones:
-		23/10/2016 - Alberto Martins - se debe agregar a la Tabla Impuesto_Por_Transaccion 
+		24/10/2016 - Alberto Martins - se debe agregar a la Tabla Impuesto_Por_Transaccion 
 			los siguientes datos de la TX:
  
 			providerTransactionID, 
