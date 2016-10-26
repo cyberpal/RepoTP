@@ -108,14 +108,15 @@ BEGIN
 			LEFT JOIN (
 				SELECT aje.id_cuenta,
 					count(1) AS cantidad_ajustes,
-					sum(CASE 
-							WHEN cop.signo = '+'
-								THEN aje.monto
-							ELSE (aje.monto * - 1)
-							END) AS importe_ajustes
+					--sum(CASE 
+					--		WHEN cop.signo = '+'
+					--			THEN aje.monto
+					--		ELSE (aje.monto * - 1)
+					--		END) AS importe_ajustes
+					SUM(aje.monto_neto)	 AS importe_ajustes
 				FROM Configurations.dbo.Ajuste aje
-				INNER JOIN Configurations.dbo.Codigo_Operacion cop
-					ON cop.id_codigo_operacion = aje.id_codigo_operacion
+				--INNER JOIN Configurations.dbo.Codigo_Operacion cop
+				--	ON cop.id_codigo_operacion = aje.id_codigo_operacion
 				WHERE aje.id_cuenta = @p_id_cuenta
 				GROUP BY aje.id_cuenta
 				) aju

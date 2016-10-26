@@ -128,13 +128,14 @@ BEGIN
 			NULL AS id_char,
 			aje.id_ajuste AS id_int,
 			aje.id_cuenta,
-			(
-				CASE 
-					WHEN cop.signo = '+'
-						THEN aje.monto
-					ELSE (aje.monto * - 1)
-					END
-				) AS importe_movimiento,
+			--(
+			--	CASE 
+			--		WHEN cop.signo = '+'
+			--			THEN aje.monto_neto
+			--		ELSE (aje.monto_neto * - 1)
+			--		END
+			--	) AS importe_movimiento,
+			aje.monto_neto AS importe_movimiento,
 			aje.fecha_alta AS fecha_movimiento,
 			NULL AS id_log_proceso,
 			NULL AS fecha_inicio_ejecucion,
@@ -143,8 +144,8 @@ BEGIN
 			1 AS flag_impactar_en_saldo,
 			NULL AS impacto_en_saldo_ok
 		FROM Configurations.dbo.Ajuste aje
-		INNER JOIN Configurations.dbo.Codigo_Operacion cop
-			ON cop.id_codigo_operacion = aje.id_codigo_operacion
+		--INNER JOIN Configurations.dbo.Codigo_Operacion cop
+		--	ON cop.id_codigo_operacion = aje.id_codigo_operacion
 		WHERE aje.id_cuenta = @p_id_cuenta
 		
 		UNION ALL

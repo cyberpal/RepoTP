@@ -105,7 +105,7 @@ BEGIN TRANSACTION;
 						--6. Insertar en ajuste
 					   INSERT INTO [dbo].[Ajuste](  
 						  [id_ajuste],  
-						  [id_motivo_ajuste],  
+						  --[Id_codigoOperacion],  
 						  [id_cuenta],  
 						  [id_motivo_ajuste],  
 						  [monto_neto],  
@@ -114,7 +114,7 @@ BEGIN TRANSACTION;
 						  [usuario_alta],  
 						  [version])  
 						VALUES(@v_idAjuste,   
-						  @Id_codigoOperacion, 
+						  --@Id_codigoOperacion, 
 						  @Id_cuenta,  
 						  @Id_MotivoAjuste,
 						  @Monto,  

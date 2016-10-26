@@ -183,7 +183,7 @@ BEGIN TRANSACTION
 						-- ingresa y verifica el ajuste
 						INSERT INTO [dbo].[Ajuste](
 								[id_ajuste],
-								[id_motivo_ajuste],
+								--[id_codigoOperacion],
 								[id_cuenta],
 								[id_motivo_ajuste],
 								[monto_neto],
@@ -192,7 +192,7 @@ BEGIN TRANSACTION
 								[usuario_alta],
 								[version])
 						VALUES(@v_idAjuste, 
-								@v_codigoOperacion,
+								--@v_codigoOperacion,
 								@p_idCuenta,
 								@v_idMotivoAjuste, 
 								@v_restaAB,

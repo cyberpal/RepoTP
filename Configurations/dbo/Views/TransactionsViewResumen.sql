@@ -148,8 +148,8 @@ t.FeeAmountBuyer as FeeAmountBuyer,
 t.TaxAmountBuyer as TaxAmountBuyer,
 t.AdditionalData as AdditionalData,
 t.PromotionIdentification as PromotionIdentification,
-t.id_tipo_concepto_boton as id_tipo_concepto_boton
---t.id_usu_cta.eMail as VendedorEmailAddress
+t.id_tipo_concepto_boton as id_tipo_concepto_boton,
+null as VendedorEmailAddress
 from Transactions.dbo.transactions t
 	left join dbo.Usuario_Cuenta usu_cta
 		on usu_cta.id_cuenta = t.LocationIdentification
