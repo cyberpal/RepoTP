@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Impuesto_Por_Tipo] (
+    [id_impuesto]           INT             NOT NULL,
+    [id_tipo]               INT             NULL,
+    [id_tipo_aplicacion]    INT             NULL,
+    [id_base_de_calculo]    INT             NULL,
+    [alicuota]              DECIMAL (12, 2) NULL,
+    [minimo_no_imponible]   DECIMAL (12, 2) NULL,
+    [flag_estado]           BIT             CONSTRAINT [DF_Impuesto_Por_Tipo_flag_estado] DEFAULT ((1)) NOT NULL,
+    [fecha_alta]            DATETIME        NULL,
+    [usuario_alta]          VARCHAR (20)    NULL,
+    [fecha_modificacion]    DATETIME        NULL,
+    [usuario_modificacion]  VARCHAR (20)    NULL,
+    [fecha_baja]            DATETIME        NULL,
+    [usuario_baja]          VARCHAR (20)    NULL,
+    [version]               INT             CONSTRAINT [DF_Impuesto_Por_Tipo_version] DEFAULT ((0)) NOT NULL,
+    [id_impuesto_tipo]      INT             IDENTITY (1, 1) NOT NULL,
+    [fecha_vigencia_inicio] DATETIME        NOT NULL,
+    [fecha_vigencia_fin]    DATETIME        NULL,
+    [cantidad_no_imponible] INT             NULL,
+    [id_tipo_periodo]       INT             NULL,
+    CONSTRAINT [PK_Impuesto_Por_Tipo] PRIMARY KEY CLUSTERED ([id_impuesto_tipo] ASC) WITH (FILLFACTOR = 80),
+    CONSTRAINT [FK_Impuesto_Por_Tipo_Tipo_id_base_de_calculo] FOREIGN KEY ([id_base_de_calculo]) REFERENCES [dbo].[Tipo] ([id_tipo]),
+    CONSTRAINT [FK_Impuesto_Por_Tipo_Tipo_id_tipo] FOREIGN KEY ([id_tipo]) REFERENCES [dbo].[Tipo] ([id_tipo]),
+    CONSTRAINT [FK_Impuesto_Por_Tipo_Tipo_id_tipo_aplicacion] FOREIGN KEY ([id_tipo_aplicacion]) REFERENCES [dbo].[Tipo] ([id_tipo]),
+    CONSTRAINT [FK_Impuesto_Por_Tipo_Tipo_id_tipo_periodo] FOREIGN KEY ([id_tipo_periodo]) REFERENCES [dbo].[Tipo] ([id_tipo]),
+    CONSTRAINT [FK_ImpuestoPorTipo_Impuesto] FOREIGN KEY ([id_impuesto]) REFERENCES [dbo].[Impuesto] ([id_impuesto])
+);
+

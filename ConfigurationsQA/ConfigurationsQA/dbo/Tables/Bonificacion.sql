@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[Bonificacion] (
+    [id_bonificacion]             INT             IDENTITY (1, 1) NOT NULL,
+    [id_promocion_comprador]      INT             NOT NULL,
+    [id_cuenta]                   INT             NOT NULL,
+    [importe_bonificacion]        DECIMAL (12, 2) NOT NULL,
+    [fecha_liberacion]            DATETIME        NULL,
+    [fecha_afectacion_saldo]      DATETIME        NULL,
+    [flag_afectacion_saldo]       BIT             CONSTRAINT [DF_Bonificacion_flag_afectacion_saldo] DEFAULT ((0)) NOT NULL,
+    [fecha_afectacion_fondeo]     DATETIME        NULL,
+    [flag_afectacion_fondeo]      BIT             CONSTRAINT [DF_Bonificacion_flag_afectacion_fondeo] DEFAULT ((0)) NOT NULL,
+    [fecha_afectacion_disponible] DATETIME        NULL,
+    [flag_afectacion_disponible]  BIT             CONSTRAINT [DF_Bonificacion_flag_afectacion_disponible] DEFAULT ((0)) NOT NULL,
+    [fecha_envio_mail]            DATETIME        NULL,
+    [flag_envio_mail]             BIT             CONSTRAINT [DF_Bonificacion_flag_envio_mail] DEFAULT ((0)) NOT NULL,
+    [fecha_alta]                  DATETIME        NOT NULL,
+    [usuario_alta]                VARCHAR (20)    NOT NULL,
+    [fecha_modificacion]          DATETIME        NULL,
+    [usuario_modificacion]        VARCHAR (20)    NULL,
+    [fecha_baja]                  DATETIME        NULL,
+    [usuario_baja]                VARCHAR (20)    NULL,
+    [version]                     INT             CONSTRAINT [DF_Bonificacion_version] DEFAULT ((0)) NOT NULL,
+    CONSTRAINT [PK_Bonificacion] PRIMARY KEY CLUSTERED ([id_bonificacion] ASC),
+    CONSTRAINT [FK_Bonificacion_Cuenta] FOREIGN KEY ([id_cuenta]) REFERENCES [dbo].[Cuenta] ([id_cuenta]),
+    CONSTRAINT [FK_Bonificacion_Promocion_Comprador] FOREIGN KEY ([id_promocion_comprador]) REFERENCES [dbo].[Promocion_Comprador] ([id_promocion_comprador])
+);
+
