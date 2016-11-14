@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "IS-UpdateBlacklist", "IS-UpdateBlacklist\IS-UpdateBlacklist.dtproj", "{69CEAF5C-A718-480A-BCB6-5EA9B6E73BE1}"
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "IS-UpdateBlacklist", "IS-UpdateBlacklist\obj\Development\IS-UpdateBlacklist.dtproj", "{C4454A24-04F3-407D-8D95-725D2D4F088C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Development|Default = Development|Default
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{69CEAF5C-A718-480A-BCB6-5EA9B6E73BE1}.Development|Default.ActiveCfg = Development
-		{69CEAF5C-A718-480A-BCB6-5EA9B6E73BE1}.Development|Default.Build.0 = Development
+		{C4454A24-04F3-407D-8D95-725D2D4F088C}.Development|Default.ActiveCfg = Development
+		{C4454A24-04F3-407D-8D95-725D2D4F088C}.Development|Default.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
