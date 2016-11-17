@@ -62,10 +62,12 @@ SET NOCOUNT ON;
 			   @cantidad_reg_9 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 9 THEN 1 ELSE 0 END),
 			   @importe_reg_5 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 5 THEN CAST(SUBSTRING(detalles,49,10) AS DECIMAL(12,2)) ELSE 0 END),
 			   @importe_reg_8 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN CAST(SUBSTRING(detalles,23,12) AS DECIMAL(12,2))  ELSE 0 END),
-	           @cantidad_tx = COUNT(1),
 			   @cantidad_tx_trailer = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN CAST(SUBSTRING(detalles,16,7) AS INT)  ELSE 0 END)
           FROM Configurations.dbo.Detalle_Archivo
          WHERE id_archivo = @id;
+	
+	
+	   SELECT @cantidad_tx = (@cantidad_reg_5+@cantidad_reg_6+@cantidad_reg_7)/3;
 	
     
         SELECT TOP 1
@@ -181,7 +183,7 @@ BEGIN TRY
         		  ON T1.row_1 = T2.row_2;
 		
 		
-		SET @registros_procesados = @cantidad_reg_5;
+		SET @registros_procesados = @cantidad_reg_5/100;
 		
 		SET @importe_procesados = @importe_reg_5;
 		 

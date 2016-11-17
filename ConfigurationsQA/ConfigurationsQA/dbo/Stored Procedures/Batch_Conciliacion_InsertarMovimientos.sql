@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[Batch_Conciliacion_InsertarMovimientos](
+CREATE PROCEDURE dbo.Batch_Conciliacion_InsertarMovimientos(
    @id_log_paso INT,
    @registros_procesados INT OUTPUT,
    @importe_procesados DECIMAL(12,2) OUTPUT,
@@ -113,11 +113,11 @@ BEGIN TRY
             ON mcm.codigo_motivo_conciliacion_manual = (CASE WHEN (mac.id_transaccion IS NULL AND mac.cant_tx = 0) THEN 'CM_00001' 
                                                              WHEN (mac.id_transaccion IS NULL AND mac.cant_tx > 1) THEN 'CM_00002'
                                                              WHEN mac.flag_aceptada_marca = 0 THEN 'CM_00003'
-				                                             WHEN (mac.estado_tx <> 'PENDIENTE' AND mac.codigo = 'EFECTIVO') THEN 'CM_00004'
+				                                             WHEN (mac.estado_tx = 'TX_VENCIDA' AND mac.codigo = 'EFECTIVO') THEN 'CM_00004'
 			                                            END)
          WHERE mac.flag_aceptada_marca = 0
             OR mac.id_transaccion IS NULL
-		    OR (mac.estado_tx <> 'PENDIENTE' AND mac.codigo = 'EFECTIVO')
+		    OR (mac.estado_tx = 'TX_VENCIDA' AND mac.codigo = 'EFECTIVO')
 			OR mac.flag_contracargo = 1;
 		   
 	 INSERT INTO Configurations.dbo.movimientos_a_distribuir(

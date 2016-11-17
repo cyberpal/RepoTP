@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE dbo.Batch_Alerta_documentacion_pendiente
+﻿CREATE PROCEDURE dbo.Batch_Alerta_documentacion_pendiente
 AS
 
 DECLARE @id_proceso INT = 27;
@@ -86,7 +85,7 @@ BEGIN TRY
 		        OR
                 DATEDIFF(DAY,cta.fecha_alta ,GETDATE()) % @aviso_mensual = 0
                )
-		   AND cta.fecha_alta > GETDATE();				
+		   AND cta.fecha_alta < GETDATE();				
 
     COMMIT TRANSACTION;
 	
