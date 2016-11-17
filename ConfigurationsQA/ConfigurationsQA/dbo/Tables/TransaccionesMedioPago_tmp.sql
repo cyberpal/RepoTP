@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[TransaccionesMedioPago_tmp] (
-    [TransaccionesMedioPagoID]                    SMALLINT        IDENTITY (1, 1) NOT NULL,
+    [TransaccionesMedioPagoID]                    INT             IDENTITY (1, 1) NOT NULL,
     [id_transaccion]                              VARCHAR (36)    NULL,
     [tipo]                                        VARCHAR (1)     NULL,
     [id_cuenta]                                   INT             NULL,
@@ -15,4 +15,6 @@
     [id_impuesto_general]                         INT             NULL,
     [impuesto]                                    DECIMAL (12, 2) NULL
 );
+
+
 

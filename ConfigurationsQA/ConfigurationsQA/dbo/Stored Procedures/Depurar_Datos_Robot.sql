@@ -4,7 +4,7 @@
 -- Description:	Store Procedure que depura las tablas NotificacionEnviada y Transactions del esquema Transactions							  ||
 -- Parametros:  EXEC Depurar_Datos_Robot @idCuenta, @idNotificacion, @idSite, @estadoTransaccion, @cantidadRegistrosCommit, @esquema		  ||
 --============================================================================================================================================||
-CREATE PROCEDURE [dbo].[Depurar_Datos_Robot]
+CREATE PROCEDURE Depurar_Datos_Robot
 	@idCuenta INT,		
 	@idNotificacion INT,
 	@idSite VARCHAR(36),

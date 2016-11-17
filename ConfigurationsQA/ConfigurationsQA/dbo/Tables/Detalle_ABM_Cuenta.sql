@@ -2,20 +2,20 @@
     [id_detalle_abm_cuenta]      INT          IDENTITY (1, 1) NOT NULL,
     [id_archivo_abm_cuenta]      INT          NOT NULL,
     [tipo_novedad]               CHAR (1)     NULL,
-    [id_tipo_cuenta]             INT          NOT NULL,
+    [id_tipo_cuenta]             INT          NULL,
     [nombre_fantasia]            VARCHAR (50) NULL,
     [razon_social]               VARCHAR (50) NULL,
     [id_operador_celular]        INT          NULL,
     [telefono_movil]             VARCHAR (10) NULL,
     [telefono_fijo]              VARCHAR (10) NULL,
-    [id_tipo_condicion_IVA]      INT          NOT NULL,
+    [id_tipo_condicion_IVA]      INT          NULL,
     [id_tipo_condicion_IIBB]     INT          NULL,
     [actividad]                  VARCHAR (4)  NULL,
     [CUIT]                       VARCHAR (11) NULL,
     [CBU]                        VARCHAR (22) NULL,
-    [id_tipo_cashout]            INT          NOT NULL,
-    [cantidad_mpos]              INT          CONSTRAINT [DF_Detalle_ABM_Cuentas_cantidad_mpos] DEFAULT ((0)) NOT NULL,
-    [id_modelo_dispositivo_mpos] INT          NOT NULL,
+    [id_tipo_cashout]            INT          NULL,
+    [cantidad_mpos]              INT          NULL,
+    [id_modelo_dispositivo_mpos] INT          NULL,
     [id_cuenta]                  INT          NULL,
     [fecha_alta]                 DATETIME     NOT NULL,
     [usuario_alta]               VARCHAR (20) NOT NULL,
@@ -26,11 +26,8 @@
     [version]                    INT          CONSTRAINT [DF_Detalle_ABM_Cuentas_version] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Detalle_ABM_Cuenta] PRIMARY KEY CLUSTERED ([id_detalle_abm_cuenta] ASC),
     CONSTRAINT [FK_Detalle_ABM_Cuenta__Archivo_ABM_Cuenta] FOREIGN KEY ([id_archivo_abm_cuenta]) REFERENCES [dbo].[Archivo_ABM_Cuenta] ([id_archivo_abm_cuenta]),
-    CONSTRAINT [FK_Detalle_ABM_Cuenta__Operador_Celular] FOREIGN KEY ([id_operador_celular]) REFERENCES [dbo].[Operador_Celular] ([id_operador_celular]),
-    CONSTRAINT [FK_Detalle_ABM_Cuenta_Cuenta] FOREIGN KEY ([id_cuenta]) REFERENCES [dbo].[Cuenta] ([id_cuenta]),
-    CONSTRAINT [FK_Detalle_ABM_Cuenta_Tipo_id_tipo_cuenta] FOREIGN KEY ([id_tipo_cuenta]) REFERENCES [dbo].[Tipo] ([id_tipo]),
-    CONSTRAINT [FK_Detalle_ABM_Cuentas__Modelo_Dispositivo_MPos] FOREIGN KEY ([id_modelo_dispositivo_mpos]) REFERENCES [dbo].[Modelo_Dispositivo_MPos] ([id_modelo_dispositivo_mpos]),
-    CONSTRAINT [FK_Detalle_ABM_Cuentas_Tipo_id_tipo_cashout] FOREIGN KEY ([id_tipo_cashout]) REFERENCES [dbo].[Tipo] ([id_tipo]),
-    CONSTRAINT [FK_Detalle_ABM_Cuentas_Tipo_id_tipo_condicion_IVA] FOREIGN KEY ([id_tipo_condicion_IVA]) REFERENCES [dbo].[Tipo] ([id_tipo])
+    CONSTRAINT [FK_Detalle_ABM_Cuenta_Cuenta] FOREIGN KEY ([id_cuenta]) REFERENCES [dbo].[Cuenta] ([id_cuenta])
 );
+
+
 

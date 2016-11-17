@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[Batch_Alerta_documentacion_pendiente]
+CREATE PROCEDURE dbo.Batch_Alerta_documentacion_pendiente
 AS
 
 DECLARE @id_proceso INT = 27;
@@ -62,10 +62,11 @@ BEGIN TRY
 		       @url_notificacion,
 			   '{"idNotificacion":"116",
 		         "idCuenta":"'+CAST(cta.id_cuenta AS VARCHAR(10))+
-				'","vinculo":"'+@url_portal+
-				'","values":{"nombreVendedor":"'+cta.denominacion2+
-				'","mailVendedor":"'+uc.Email+
-				'"}}'
+				'","values":{"vinculo":"'+@url_portal+
+				            '","mailForm":"notificaciones@todopago.com.ar","nombreVendedor":"'+cta.denominacion2+
+				            '","mailVendedor":"'+uc.Email+
+				'"},
+				"attachments":null}'
           FROM Configurations.dbo.Cuenta cta
     INNER JOIN Configurations.dbo.Tipo t
             ON t.id_tipo = cta.id_tipo_cuenta
@@ -84,7 +85,8 @@ BEGIN TRY
 				DATEDIFF(DAY,cta.fecha_alta ,GETDATE()) = @segundo_aviso
 		        OR
                 DATEDIFF(DAY,cta.fecha_alta ,GETDATE()) % @aviso_mensual = 0
-               )				
+               )
+		   AND cta.fecha_alta > GETDATE();				
 
     COMMIT TRANSACTION;
 	

@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[Batch_Conciliacion_ValidarPagofacil](@id_log_proceso INT)
+CREATE PROCEDURE dbo.Batch_Conciliacion_ValidarPagofacil(@id_log_proceso INT)
 AS
 DECLARE @resultado_proceso BIT = 0;
 DECLARE @id INT;
@@ -61,7 +61,7 @@ SET NOCOUNT ON;
 	           @cantidad_reg_8 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN 1 ELSE 0 END),
 			   @cantidad_reg_9 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 9 THEN 1 ELSE 0 END),
 			   @importe_reg_5 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 5 THEN CAST(SUBSTRING(detalles,49,10) AS DECIMAL(12,2)) ELSE 0 END),
-			   @importe_reg_8 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN CAST(SUBSTRING(detalles,24,10) AS DECIMAL(12,2))  ELSE 0 END),
+			   @importe_reg_8 = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN CAST(SUBSTRING(detalles,23,12) AS DECIMAL(12,2))  ELSE 0 END),
 	           @cantidad_tx = COUNT(1),
 			   @cantidad_tx_trailer = SUM(CASE WHEN SUBSTRING(detalles,1,1) = 8 THEN CAST(SUBSTRING(detalles,16,7) AS INT)  ELSE 0 END)
           FROM Configurations.dbo.Detalle_Archivo

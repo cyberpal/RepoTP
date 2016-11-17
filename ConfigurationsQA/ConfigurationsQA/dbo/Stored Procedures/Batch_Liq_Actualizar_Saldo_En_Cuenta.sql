@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Batch_Liq_Actualizar_Saldo_En_Cuenta] (
+﻿CREATE PROCEDURE Batch_Liq_Actualizar_Saldo_En_Cuenta (
 	@LocationIdentification INT = NULL,
 	@Amount DECIMAL(12,2) = 0,
 	@FeeAmount DECIMAL(12,2) = 0,

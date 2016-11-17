@@ -31,7 +31,14 @@
 );
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [IX_Medio_Pago_Cuenta_id_cuenta]
     ON [dbo].[Medio_Pago_Cuenta]([id_cuenta] ASC, [hash_numero_tarjeta] ASC, [fecha_baja] ASC) WITH (FILLFACTOR = 95);
+
+
+GO
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20161111-172507]
+    ON [dbo].[Medio_Pago_Cuenta]([id_banco] ASC, [id_estado_medio_pago] ASC, [fecha_baja] ASC, [id_medio_pago] ASC);
 

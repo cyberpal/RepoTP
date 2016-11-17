@@ -29,11 +29,13 @@ BEGIN
 
 	IF (
 			EXISTS (
+
 				SELECT 1
 				FROM Configurations.dbo.Procesar_Facturacion_tmp pf
 				WHERE LTRIM(RTRIM(pf.OperationName)) IN ('Devolucion')
 					AND pf.LocationIdentification = @v_id_cuenta
 				HAVING SUM(ISNULL(pf.FeeAmount, 0)) > 0
+				
 				)
 			)
 	BEGIN
@@ -89,13 +91,27 @@ BEGIN
 			[id_transaccion],
 			[fecha_alta],
 			[usuario_alta],
-			[version]
+			[version],
+						
+			[providerTransactionID],
+			[createTimestamp],
+			[saleConcept],
+			[CredentialEmailAddress],
+			[amount],
+			[feeAmount]
+
 			)
 		SELECT @v_id_item_facturacion,
 			txs.Id,
 			@v_fecha_actual,
 			@v_usuario_alta,
-			@v_version
+			@v_version,
+		    txs.providerTransactionID,
+			txs.createTimestamp,
+			txs.saleConcept,
+			txs.CredentialEmailAddress,
+			txs.amount,
+			txs.feeAmount
 		FROM Configurations.dbo.Procesar_Facturacion_tmp txs
 		WHERE LTRIM(RTRIM(txs.OperationName)) IN ('Devolucion')
 			AND txs.LocationIdentification = @v_id_cuenta;

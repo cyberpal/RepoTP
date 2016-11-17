@@ -36,6 +36,8 @@
 );
 
 
+
+
 GO
 CREATE NONCLUSTERED INDEX [idx_AuthorizeBuyValidateRetrieveAlertLimitFiscal]
     ON [dbo].[Situacion_Fiscal_Cuenta]([id_cuenta] ASC, [flag_vigente] ASC);
@@ -43,7 +45,7 @@ CREATE NONCLUSTERED INDEX [idx_AuthorizeBuyValidateRetrieveAlertLimitFiscal]
 
 GO
 
-CREATE TRIGGER [dbo].[Insert_History_Situacion_Fiscal_Cuenta] ON [dbo].[Situacion_Fiscal_Cuenta]
+CREATE TRIGGER [Insert_History_Situacion_Fiscal_Cuenta] ON dbo.Situacion_Fiscal_Cuenta
 	FOR UPDATE AS
 	BEGIN
 		IF EXISTS (select * from deleted)

@@ -1,6 +1,6 @@
 ﻿
 
-CREATE PROCEDURE [dbo].[Ajustes_Nuevo_Ajuste] (
+CREATE PROCEDURE Ajustes_Nuevo_Ajuste (
 	@id_cuenta INT,
 	@id_motivo_ajuste INT,
 	@importe_neto DECIMAL(12, 2),

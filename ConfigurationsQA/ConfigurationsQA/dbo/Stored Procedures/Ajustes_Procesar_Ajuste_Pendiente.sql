@@ -1,5 +1,5 @@
 ﻿
-CREATE PROCEDURE [dbo].[Ajustes_Procesar_Ajuste_Pendiente] (
+CREATE PROCEDURE Ajustes_Procesar_Ajuste_Pendiente (
 	@id_ajuste INT,
 	@usuario VARCHAR(20)
 	)
