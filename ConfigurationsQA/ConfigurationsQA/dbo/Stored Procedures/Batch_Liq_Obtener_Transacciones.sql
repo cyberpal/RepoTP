@@ -24,8 +24,8 @@ BEGIN
 				trn.ProductIdentification,
 				trn.OperationName,
 				trn.Amount,
-				NULL AS FeeAmount,
-				NULL AS TaxAmount,
+				trn.FeeAmount,
+				trn.TaxAmount,
 				trn.CashoutTimestamp,
 				trn.FilingDeadline,
 				trn.PaymentTimestamp,
@@ -55,9 +55,9 @@ BEGIN
 				trn.CredentialMask,
 				trn.OriginalOperationId,
 			    trn.Channel,  
-			    NULL as ProviderTransactionID,  
-			    NULL as SaleConcept,  
-			    NULL as CredentialEmailAddress    
+			    trn.ProviderTransactionID,  
+			    trn.SaleConcept,  
+			    trn.CredentialEmailAddress    
 			FROM Transactions.dbo.Transactions trn
 			INNER JOIN Configurations.dbo.Medio_De_Pago mdp
 				ON trn.ProductIdentification = mdp.id_medio_pago
@@ -112,9 +112,9 @@ BEGIN
 				trn.CredentialMask,
 				trn.OriginalOperationId,
 			    trn.Channel,  
-			    NULL as ProviderTransactionID,  
-			    NULL as SaleConcept,  
-			    NULL as CredentialEmailAddress    
+			    trn.ProviderTransactionID,  
+			    trn.SaleConcept,  
+			    trn.CredentialEmailAddress    
 			FROM Transactions.dbo.Transactions trn
 			WHERE LTRIM(RTRIM(UPPER(trn.OperationName))) = 'DEVOLUCION'
 				AND trn.ResultCode = - 1
