@@ -516,6 +516,12 @@ BEGIN
      ,aplica_acumulacion
 	 ,id_impuesto_tipo
 	 ,id_acumulador_impuesto
+	   ,ProviderTransactionID 
+	   ,CreateTimestamp       
+	   ,SaleConcept           
+	   ,CredentialEmailAddress
+	   ,Amount                
+	   ,FeeAmount    
      )
     VALUES (
      @id_cargo
@@ -526,6 +532,12 @@ BEGIN
      ,@aplica_acumulacion
 	 ,@id_impuesto_tipo
 	 ,@id_Acumulador_Impuesto
+	   ,@ProviderTransactionID 
+	   ,@CreateTimestamp       
+	   ,@SaleConcept           
+	   ,@CredentialEmailAddress
+	   ,@Amount                
+	   ,@FeeAmount      
      )
    END;
 
