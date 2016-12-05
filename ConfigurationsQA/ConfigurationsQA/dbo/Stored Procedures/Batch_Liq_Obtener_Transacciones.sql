@@ -12,6 +12,8 @@ BEGIN
 		BEGIN TRANSACTION;
 
 		INSERT INTO Configurations.dbo.Liquidacion_Tmp
+		(I, Id, CreateTimestamp, LocationIdentification, ProductIdentification, OperationName, Amount, FeeAmount, TaxAmount, CashoutTimestamp, FilingDeadline, PaymentTimestamp, FacilitiesPayments, LiquidationStatus, LiquidationTimestamp, PromotionIdentification, ButtonCode, Flag_Ok, TransactionStatus, BuyerAccountIdentification, AdditionalData, CredentialDocumentType, CredentialDocumentNumber, CredentialMask, OriginalOperationId, Channel, ProviderTransactionID, SaleConcept, CredentialEmailAddress)
+
 		SELECT ROW_NUMBER() OVER (
 				ORDER BY CreateTimestamp
 				) AS I,
@@ -143,8 +145,10 @@ BEGIN
 
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;
+		Throw;
 	END CATCH
 
 	RETURN @rows;
 END
 
+go
