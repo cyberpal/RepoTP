@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ConfigurationsQA", "ConfigurationsQA\ConfigurationsQA.sqlproj", "{E4DB7A57-7F8A-4EDB-9B58-3904A3F1F584}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56ECFFF3-96F6-463E-972C-10AD6EEC635B} = {56ECFFF3-96F6-463E-972C-10AD6EEC635B}
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Transactions", "..\Transactions\Transactions.sqlproj", "{56ECFFF3-96F6-463E-972C-10AD6EEC635B}"
 EndProject

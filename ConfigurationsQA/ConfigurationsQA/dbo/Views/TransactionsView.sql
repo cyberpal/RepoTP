@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[TransactionsView] AS
+﻿CREATE VIEW [dbo].[TransactionsView] AS
 select 
        t.Id as id, 
        t.CreateTimestamp as fecha,
@@ -41,13 +40,14 @@ select
 	   t.productType as ProductType,
 	   t.resultMessage as ResultMessage,
 	   e.nombre as EstadoTransaccion,
-	   t.channel as Channel
-from Transactions.dbo.transactions t
-left join dbo.Banco bco
+	   t.channel as Channel,
+	   t.id_tipo_concepto_boton as id_tipo_concepto_boton
+from Transactions.dbo.transactions  (NOLOCK) t
+left join dbo.Banco (NOLOCK)  bco
 on bco.id_banco = t.bankIdentification
-left join dbo.Cuenta cta
+left join dbo.Cuenta (NOLOCK) cta 
 on cta.id_cuenta = t.LocationIdentification
-left join dbo.Usuario_Cuenta usu_cta
+left join dbo.Usuario_Cuenta (NOLOCK) usu_cta
 on usu_cta.id_cuenta = t.LocationIdentification
 left join dbo.Estado e
 on e.codigo = t.TransactionStatus
@@ -94,9 +94,10 @@ select (cast (r.id_retiro_dinero as varchar))
 	   null as ProductType,
 	   null as ResultMessage,
 	   e.nombre as EstadoTransaccion,
-	   null as channel
-from dbo.Retiro_Dinero r
-right join dbo.Informacion_Bancaria_Cuenta b
+	   null as channel,
+	   NULL as id_tipo_concepto_boton
+from dbo.Retiro_Dinero (NOLOCK) r 
+right join dbo.Informacion_Bancaria_Cuenta (NOLOCK) b
 on r.id_informacion_bancaria_destino = b.id_informacion_bancaria
 left join dbo.Estado e
 on e.codigo = r.estado_transaccion
@@ -143,11 +144,11 @@ select (cast (a.id_ajuste as varchar))
 	   null as ProductType,
 	   null as ResultMessage,
 	   e.nombre as EstadoTransaccion,
-	   null as channel
-from dbo.Ajuste a
+	   null as channel,
+	   NULL as id_tipo_concepto_boton
+from dbo.Ajuste (NOLOCK) a
 left join dbo.Estado e
 on e.id_estado = a.estado_ajuste
 left join dbo.Motivo_Ajuste ma
 on a.id_motivo_ajuste = ma.id_motivo_ajuste
 WHERE e.codigo = 'AJUSTE_PROCESADO'
-

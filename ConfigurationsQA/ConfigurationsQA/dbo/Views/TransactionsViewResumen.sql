@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[TransactionsViewResumen] AS
+﻿CREATE VIEW [dbo].[TransactionsViewResumen] AS
 select
 t.Id as Id,
 t.CreateTimestamp as CreateTimestamp,
@@ -150,8 +149,8 @@ t.AdditionalData as AdditionalData,
 t.PromotionIdentification as PromotionIdentification,
 t.id_tipo_concepto_boton as id_tipo_concepto_boton,
 usu_cta.eMail as VendedorEmailAddress
-from Transactions.dbo.transactions t
-left join dbo.Usuario_Cuenta usu_cta
+from Transactions.dbo.transactions (NOLOCK) t
+left join dbo.Usuario_Cuenta (NOLOCK) usu_cta
 on usu_cta.id_cuenta = t.LocationIdentification
 
 union all
@@ -307,7 +306,7 @@ NULL as PromotionIdentification,
 NULL as id_tipo_concepto_boton,
 NULL as VendedorEmailAddress
 
-from dbo.Ajuste a
+from dbo.Ajuste (NOLOCK) a
 left join dbo.Estado e
 on e.id_estado = a.estado_ajuste
 left join dbo.Motivo_Ajuste ma
