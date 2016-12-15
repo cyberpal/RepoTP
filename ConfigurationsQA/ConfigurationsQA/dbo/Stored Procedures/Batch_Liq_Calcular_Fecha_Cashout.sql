@@ -1,4 +1,18 @@
-﻿
+﻿--////////////////////////////////////////////////////////////////////////////////////
+-- Proyecto:			TodoPago
+-- Procedimiento:	[dbo].[Batch_Liq_Calcular_Fecha_Cashout]
+-- Descripcion:		
+--					En cascada se evalua si existe :
+--					1)	Plazo de liberación para una cuenta particular
+--					2)	Si no hay, ver si para el grupo al que pertenece su rubro hay plazo especial
+--					3)	Por último aplicar el general
+
+-- Historial de Cambios:
+--					13-12-16  (AM) Se excluyen de las opciones 2 y 3 Cuenta y Grupo NOT NULL
+
+--////////////////////////////////////////////////////////////////////////////////////
+
+
 CREATE PROCEDURE [dbo].[Batch_Liq_Calcular_Fecha_Cashout] (
 	@CreateTimestamp DATETIME,
 	@LocationIdentification INT,
@@ -22,10 +36,10 @@ BEGIN
 		SELECT @tmp_codigo = tmp.codigo,
 			@plazo_liberacion = pln.plazo_liberacion,
 			@plazo_liberacion_cuotas = pln.plazo_liberacion_cuotas
-		FROM Configurations.dbo.Plazo_Liberacion pln
-		INNER JOIN Configurations.dbo.Medio_De_Pago mdp
+		FROM dbo.Plazo_Liberacion (NOLOCK) pln
+		INNER JOIN dbo.Medio_De_Pago (NOLOCK) mdp
 			ON pln.id_tipo_medio_pago = mdp.id_tipo_medio_pago
-		INNER JOIN Configurations.dbo.Tipo_Medio_Pago tmp
+		INNER JOIN dbo.Tipo_Medio_Pago (NOLOCK) tmp
 			ON mdp.id_tipo_medio_pago = tmp.id_tipo_medio_pago
 		WHERE mdp.flag_habilitado > 0
 			AND pln.id_cuenta = @LocationIdentification
@@ -41,19 +55,20 @@ BEGIN
 			SELECT @tmp_codigo = tmp.codigo,
 				@plazo_liberacion = pln.plazo_liberacion,
 				@plazo_liberacion_cuotas = pln.plazo_liberacion_cuotas
-			FROM Configurations.dbo.Cuenta cta
-			INNER JOIN Configurations.dbo.Actividad_Cuenta AS aca
+			FROM dbo.Cuenta (NOLOCK) cta
+			INNER JOIN dbo.Actividad_Cuenta (NOLOCK) AS aca
 				ON cta.id_cuenta = aca.id_cuenta
-			INNER JOIN Configurations.dbo.Rubro_GrupoRubro AS rgo
+			INNER JOIN dbo.Rubro_GrupoRubro (NOLOCK) AS rgo
 				ON aca.id_rubro = rgo.id_rubro
-			INNER JOIN Configurations.dbo.Plazo_Liberacion AS pln
+			INNER JOIN dbo.Plazo_Liberacion (NOLOCK) AS pln
 				ON pln.id_tipo_cuenta = cta.id_tipo_cuenta
 					AND pln.id_grupo_rubro = rgo.id_grupo_rubro
-			INNER JOIN Configurations.dbo.Tipo_Medio_Pago tmp
+			INNER JOIN dbo.Tipo_Medio_Pago (NOLOCK) tmp
 				ON tmp.id_tipo_medio_pago = pln.id_tipo_medio_pago
-			INNER JOIN Configurations.dbo.Medio_De_Pago AS mdp
+			INNER JOIN dbo.Medio_De_Pago (NOLOCK) AS mdp
 				ON mdp.id_tipo_medio_pago = tmp.id_tipo_medio_pago
 			WHERE cta.id_cuenta = @LocationIdentification
+				AND pln.id_cuenta IS NULL
 				AND aca.flag_vigente = 1
 				AND mdp.id_medio_pago = @ProductIdentification
 				AND mdp.flag_habilitado > 0
@@ -68,15 +83,17 @@ BEGIN
 			SELECT @tmp_codigo = tmp.codigo,
 				@plazo_liberacion = pln.plazo_liberacion,
 				@plazo_liberacion_cuotas = pln.plazo_liberacion_cuotas
-			FROM Configurations.dbo.Plazo_Liberacion pln
-			INNER JOIN Configurations.dbo.Medio_De_Pago mdp
+			FROM dbo.Plazo_Liberacion (NOLOCK) pln
+			INNER JOIN dbo.Medio_De_Pago (NOLOCK) mdp
 				ON pln.id_tipo_medio_pago = mdp.id_tipo_medio_pago
-			INNER JOIN Configurations.dbo.Tipo_Medio_Pago tmp
+			INNER JOIN dbo.Tipo_Medio_Pago (NOLOCK) tmp
 				ON mdp.id_tipo_medio_pago = tmp.id_tipo_medio_pago
-			INNER JOIN Configurations.dbo.Cuenta cta
+			INNER JOIN dbo.Cuenta (NOLOCK) cta
 				ON pln.id_tipo_cuenta = cta.id_tipo_cuenta
 			WHERE mdp.flag_habilitado > 0
 				AND cta.id_cuenta = @LocationIdentification
+				AND pln.id_cuenta IS NULL
+                AND pln.id_grupo_rubro IS NULL
 				AND mdp.id_medio_pago = @ProductIdentification
 				AND pln.fecha_alta <= @CreateTimestamp
 				AND (
@@ -103,7 +120,7 @@ BEGIN
 				ROW_NUMBER() OVER (
 					ORDER BY fro.fecha
 					) AS nro_fila
-			FROM Configurations.dbo.Feriados fro
+			FROM dbo.Feriados (NOLOCK) fro
 			WHERE fro.esFeriado = 0
 				AND fro.habilitado = 1
 			)
@@ -123,4 +140,6 @@ BEGIN
 		RETURN 0;
 	END CATCH
 END
+
+
 
