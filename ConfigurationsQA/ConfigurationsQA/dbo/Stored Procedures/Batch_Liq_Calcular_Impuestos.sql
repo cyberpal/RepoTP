@@ -156,6 +156,7 @@ BEGIN
     ,1;
   END;
 
+  SET @cod_prov_comprador = null; -------------<AM>
   SELECT @cod_prov_comprador = pva.codigo
   FROM Configurations.dbo.Provincia pva
   WHERE pva.id_provincia = @id_prov_comprador;
