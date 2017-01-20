@@ -1916,5 +1916,6 @@
     <None Include="ConfigurationsQA.publish.xml" />
     <None Include="ConfigurationsQA.publishToLocalDB.xml" />
     <None Include="ConfigurationsQAToLocalDB.publish.xml" />
+    <None Include="Snapshots\ConfigurationsQA_20170120_10-18-16.dacpac" />
   </ItemGroup>
 </Project>
