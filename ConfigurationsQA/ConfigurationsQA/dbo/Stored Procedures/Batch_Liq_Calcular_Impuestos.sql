@@ -1,8 +1,7 @@
 ﻿
 
 CREATE PROCEDURE [dbo].[Batch_Liq_Calcular_Impuestos] (
--- Se agrega nuevo paràmetro
- @Id CHAR(36)
+  @Id CHAR(36)
  ,@CreateTimestamp DATETIME
  ,@LocationIdentification INT
  ,@BuyerAccountIdentification INT
@@ -155,6 +154,7 @@ BEGIN
     ,'Error en SP - Batch_Liq_Obtener_Provincia_Comprador'
     ,1;
   END;
+
 
   SET @cod_prov_comprador = null; -------------<AM>
   SELECT @cod_prov_comprador = pva.codigo
