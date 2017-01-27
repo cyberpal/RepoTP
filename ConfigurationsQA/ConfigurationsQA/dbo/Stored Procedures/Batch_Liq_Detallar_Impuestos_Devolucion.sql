@@ -25,6 +25,7 @@ declare @fecha_desde datetime = null
 declare @fecha_hasta datetime = null
 declare @Amount DECIMAL(12, 2)
 declare @monto_calculado_impuesto decimal(12,2)
+DECLARE @monto_aplicado_impuesto DECIMAL(12, 2)
 declare @estado_tope INT = 0;-- -1 (deshabilitado/cuando se aplica la 1ra vez se deshabilita) - 0 (no superado) - 1 (superado)
 declare @porcentaje_exclusion_IIBB decimal(5,2)
 declare @fecha_hasta_exclusion_IIBB datetime
@@ -40,6 +41,12 @@ declare @tx_Amount DECIMAL(12, 2)
 declare @Impuesto_A_Aplicar decimal(12,2)
 declare @id_acumulador_impuesto int
 declare @Impuesto_tipo Int
+
+DECLARE		  @ProviderTransactionID            VARCHAR (64)    
+			 ,@SaleConcept                      VARCHAR (255)   
+			 ,@CredentialEmailAddress           VARCHAR (64)    
+			 ,@FeeAmount                        DECIMAL (12, 2) ;
+
 
 
 BEGIN
@@ -77,13 +84,17 @@ BEGIN
 
 	-- Obtiene datos necesarios desde la transacción original
 
-	SELECT @id_impuesto =id_impuesto
-   ,@id_cargo = id_cargo,   
-  --,@monto_calculado = monto_calculado * IIF(@tx_TaxAmount = 0, 0, (@TaxAmount * 100 / @tx_TaxAmount)) / 100
-  @monto_calculado =  alicuota * @Amount  / 100
-   --,@monto_calculado = monto_calculado * IIF(@tx_TaxAmount = 0, 0, (@Amount * 100 / @tx_Amount)) / 100
-   ,@alicuota = alicuota --* IIF(@tx_TaxAmount = 0, 0, (@TaxAmount / @tx_TaxAmount * 100)) / 100
-   ,@Impuesto_tipo = id_impuesto_tipo
+	SELECT		 @id_impuesto			  = id_impuesto
+				,@id_cargo				  = id_cargo   
+				,@monto_calculado		  = monto_calculado 
+				,@monto_aplicado_impuesto = monto_aplicado
+				,@alicuota				  = alicuota 
+				,@Impuesto_tipo			  = id_impuesto_tipo
+				,@ProviderTransactionID   = ProviderTransactionID 
+				,@SaleConcept             = SaleConcept           
+				,@CredentialEmailAddress  = CredentialEmailAddress
+				,@FeeAmount               = FeeAmount             
+
   FROM Configurations.dbo.Impuesto_Por_Transaccion
   WHERE id_transaccion = @tx_Id;  -- 
 
@@ -126,29 +137,38 @@ BEGIN
    id_impuesto
    ,id_cargo
    ,id_transaccion
-   ,monto_aplicado -- monto_calculado
+   ,monto_aplicado 
    ,alicuota
    ,fecha_alta
    ,usuario_alta
    ,version
    ,monto_calculado
    ,id_acumulador_impuesto
+
+   	   ,ProviderTransactionID 
+	   ,CreateTimestamp       
+	   ,SaleConcept           
+	   ,CredentialEmailAddress
+	   ,Amount                
+	   ,FeeAmount    
    )
   SELECT @id_impuesto
-   ,@id_cargo
-   ,@Id
-   --,iif(@flag_supera_tope = 1, @monto_calculado * -1, 0)
-   --,0
-   --, @monto_calculado * -1
-   ,@Impuesto_A_Aplicar * -1
-   ,@alicuota
-   ,GETDATE()
-   ,@Usuario
-   ,0
-   ,@monto_calculado * -1
-   ,@id_acumulador_impuesto
-  --FROM Configurations.dbo.Impuesto_Por_Transaccion
- -- WHERE id_transaccion = @tx_Id;
+	   ,@id_cargo
+	   ,@Id
+	   ,@monto_aplicado_impuesto   --@Impuesto_A_Aplicar  * -1
+	   ,@alicuota
+	   ,GETDATE()
+	   ,@Usuario
+	   ,0
+	   ,@monto_calculado --  * -1
+	   ,@id_acumulador_impuesto
+		   ,@ProviderTransactionID 
+		   ,@CreateTimestamp       
+		   ,@SaleConcept           
+		   ,@CredentialEmailAddress
+		   ,@Amount                
+		   ,@FeeAmount    
+
 
 /*
   SET @ret_code = 1;
@@ -180,5 +200,4 @@ BEGIN
 
  RETURN @ret_code;
 END
-
 

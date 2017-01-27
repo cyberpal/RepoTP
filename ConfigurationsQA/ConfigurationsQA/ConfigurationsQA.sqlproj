@@ -1897,6 +1897,7 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
+    <Compile Include="Generar nuevos cargos por cuenta.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="Transactions">
