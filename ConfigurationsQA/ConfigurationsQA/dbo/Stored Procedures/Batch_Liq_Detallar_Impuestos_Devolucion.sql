@@ -1,16 +1,13 @@
-﻿
-
-CREATE PROCEDURE [dbo].[Batch_Liq_Detallar_Impuestos_Devolucion] (
- @Id CHAR(36)
- ,@TaxAmount DECIMAL(12, 2)
- ,@Usuario VARCHAR(20)
- --,@id_motivo_ajuste_negativo int
- ,@id_motivo_ajuste_positivo int
- ,@nro_iibb varchar(20)
- ,@cod_prov_comprador varchar(20)
- ,@cod_prov_vendedor varchar(20)
- ,@id_tipo_condicion_IIBB int
- )
+﻿CREATE PROCEDURE [dbo].[Batch_Liq_Detallar_Impuestos_Devolucion] (
+				  @Id CHAR(36)
+				 ,@TaxAmount DECIMAL(12, 2)
+				 ,@Usuario VARCHAR(20)
+				 ,@id_motivo_ajuste_positivo int
+				 ,@nro_iibb varchar(20)
+				 ,@cod_prov_comprador varchar(20)
+				 ,@cod_prov_vendedor varchar(20)
+				 ,@id_tipo_condicion_IIBB int
+				 )
 AS
 
 DECLARE @tx_Id CHAR(36);
@@ -37,7 +34,6 @@ declare @cantidad_tx int
 declare @Monto_a_Ajustar decimal(12,2)
 declare @OriginalOperationId CHAR(36)
 declare @tx_Amount DECIMAL(12, 2)
---declare @flag_supera_tope int
 declare @Impuesto_A_Aplicar decimal(12,2)
 declare @id_acumulador_impuesto int
 declare @Impuesto_tipo Int
@@ -54,31 +50,21 @@ BEGIN
 
  BEGIN TRY
   -- Obtener ID y Cargo de la Transacción sobre la que se realiza la Devolución    
-  
- 
 
-  select @OriginalOperationId = OriginalOperationId
-  ,@CreateTimestamp = CreateTimestamp,
-  @Amount = Amount
-  --@Id_Cuenta = @LocationIdentification
-  from dbo.Liquidacion_Tmp
+  SELECT	 @OriginalOperationId	= OriginalOperationId
+			,@CreateTimestamp		= CreateTimestamp
+			,@Amount				= Amount
+  FROM	dbo.Liquidacion_Tmp
   WHERE Id = @Id
 
-  
-  SELECT @tx_Id = Id
-   ,@LocationIdentification = LocationIdentification
-   ,@tx_Amount = Amount
-   ,@tx_TaxAmount = TaxAmount
-   ,@CreateTimestampTXOrig = CreateTimestamp
-   ,@OriginalOperationAmount = Amount
-  FROM Transactions.dbo.transactions
+  SELECT	@tx_Id = Id
+		   ,@LocationIdentification = LocationIdentification
+		   ,@tx_Amount = Amount
+		   ,@tx_TaxAmount = TaxAmount
+		   ,@CreateTimestampTXOrig = CreateTimestamp
+		   ,@OriginalOperationAmount = Amount
+  FROM	Transactions.dbo.transactions
   WHERE Id = @OriginalOperationId 
-
-	/*
-	select @flag_supera_tope = flag_supera_tope 
-	from dbo.Acumulador_Impuesto
-	where id_cuenta = @LocationIdentification
-	*/
 
 	--print 'Entro al detallar'
 
@@ -110,31 +96,31 @@ BEGIN
   SET @ret_code = 1;
 
  EXEC @ret_code = Configurations.dbo.Batch_Liq_Actualizar_Acumulador_Impuestos_Por_Devolucion 
-  @Id 
- ,@LocationIdentification 
- ,@CreateTimestampTXOrig
- ,@CreateTimestamp 
- ,@Amount 
- ,@OriginalOperationAmount 
- ,'DEVOLUCION'
- ,@OriginalOperationId 
- ,@Usuario
- ,@id_motivo_ajuste_positivo
- ,@nro_iibb
- ,@cod_prov_comprador 
- ,@cod_prov_vendedor
- ,@id_impuesto
- ,@id_tipo_condicion_IIBB
- ,@alicuota
- ,@Impuesto_tipo
- ,@Impuesto_A_Aplicar output  
- ,@id_acumulador_impuesto output
+		  @Id 
+		 ,@LocationIdentification 
+		 ,@CreateTimestampTXOrig
+		 ,@CreateTimestamp 
+		 ,@Amount 
+		 ,@OriginalOperationAmount 
+		 ,'DEVOLUCION'
+		 ,@OriginalOperationId 
+		 ,@Usuario
+		 ,@id_motivo_ajuste_positivo
+		 ,@nro_iibb
+		 ,@cod_prov_comprador 
+		 ,@cod_prov_vendedor
+		 ,@id_impuesto
+		 ,@id_tipo_condicion_IIBB
+		 ,@alicuota
+		 ,@Impuesto_tipo
+		 ,@Impuesto_A_Aplicar output  
+		 ,@id_acumulador_impuesto output
 
  -- Fin inversión
 
   -- Insertar el detalle de Cargos de la Devolución basado en los Cargos de la Transacción      
   INSERT INTO Configurations.dbo.Impuesto_Por_Transaccion (
-   id_impuesto
+    id_impuesto
    ,id_cargo
    ,id_transaccion
    ,monto_aplicado 
@@ -144,7 +130,6 @@ BEGIN
    ,version
    ,monto_calculado
    ,id_acumulador_impuesto
-
    	   ,ProviderTransactionID 
 	   ,CreateTimestamp       
 	   ,SaleConcept           
@@ -155,7 +140,7 @@ BEGIN
   SELECT @id_impuesto
 	   ,@id_cargo
 	   ,@Id
-	   ,@monto_aplicado_impuesto   --@Impuesto_A_Aplicar  * -1
+	   ,@monto_aplicado_impuesto 
 	   ,@alicuota
 	   ,GETDATE()
 	   ,@Usuario
@@ -169,27 +154,6 @@ BEGIN
 		   ,@Amount                
 		   ,@FeeAmount    
 
-
-/*
-  SET @ret_code = 1;
-
- EXEC @ret_code = Configurations.dbo.Batch_Liq_Actualizar_Acumulador_Impuestos_Por_Devolucion 
-  @Id 
- ,@LocationIdentification 
- ,@CreateTimestampTXOrig
- ,@CreateTimestamp 
- ,@Amount 
- ,@OriginalOperationAmount 
- ,'DEVOLUCION'
- ,@OriginalOperationId 
- ,@Usuario
- ,@id_motivo_ajuste_positivo
- ,@nro_iibb
- ,@cod_prov_comprador 
- ,@cod_prov_vendedor
- ,@id_impuesto
- ,@id_tipo_condicion_IIBB
- */
  END TRY
 
  BEGIN CATCH
@@ -200,4 +164,3 @@ BEGIN
 
  RETURN @ret_code;
 END
-
