@@ -1897,7 +1897,8 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
-    <Compile Include="Generar nuevos cargos por cuenta.sql" />
+    <Build Include="dbo\Stored Procedures\Batch_CashOut_Main.sql" />
+    <Build Include="dbo\Stored Procedures\Batch_CashOut_Obtener_Cuentas.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="Transactions">

@@ -10,6 +10,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ConfigurationsQA", "Configu
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Transactions", "..\Transactions\Transactions.sqlproj", "{56ECFFF3-96F6-463E-972C-10AD6EEC635B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{9F5EBCBF-A3D6-41EF-843D-2901E242F948}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{56ECFFF3-96F6-463E-972C-10AD6EEC635B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56ECFFF3-96F6-463E-972C-10AD6EEC635B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56ECFFF3-96F6-463E-972C-10AD6EEC635B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9F5EBCBF-A3D6-41EF-843D-2901E242F948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F5EBCBF-A3D6-41EF-843D-2901E242F948}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F5EBCBF-A3D6-41EF-843D-2901E242F948}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F5EBCBF-A3D6-41EF-843D-2901E242F948}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,6 +15,7 @@
 				•	Actualización del saldo en cuenta
 
 	Modificaciones:
+		06-03-2016 - Alberto Martins - se agrega control de la tabla Feriados
 		21/10/2016 - Alberto Martins - se debe agregar a la Tabla Impuesto_Por_Transaccion 
 			los siguientes datos de la TX:
  
@@ -74,6 +75,13 @@ DECLARE @cod_prov_vendedor VARCHAR(20)
 DECLARE @id_impuesto INT;
 DECLARE @id_tipo_condicion_IIBB INT;
 declare @Channel VARCHAR(36); 
+DECLARE @EsFeriado BIT = NULL;  
+DECLARE @cashoutMax  DATETIME;
+DECLARE @Plazo_liberacion  INT;
+DECLARE @Plazo_liberacion1 INT;
+DECLARE @Plazo_liberacion2 INT;
+DECLARE @fechaTexto char(10);
+DECLARE @mensajeError varchar(80);
 
 BEGIN
 	SET NOCOUNT ON;
@@ -102,6 +110,47 @@ BEGIN
 		FROM dbo.Tipo tpo
 		WHERE tpo.codigo = 'ORIG_PROCESO'
 			AND tpo.id_grupo_tipo = 17;
+
+		-- Verificar que exista la tabla de feriados
+
+		IF OBJECT_ID('dbo.Feriados','U') IS NULL THROW 50001, 'No existe la tabla de Feriados.', 1;
+		
+		-- Verificar que exista la fecha de hoy en la tabla de feriados	
+		set @EsFeriado = null;
+		SELECT @Esferiado = fro.esFeriado
+		  FROM Configurations.dbo.Feriados fro 
+		 WHERE CAST(fro.fecha AS DATE) = CAST(GETDATE() AS DATE)
+		   AND fro.habilitado = 1;  
+		    
+		SET @fechaTexto = CONVERT(char(10),CAST(GETDATE() AS DATE), 103) ;
+		SET @mensajeError = 'No existe el registro ' + @fechaTexto + ' en la tabla de Feriados.';
+
+		IF (@Esferiado IS NULL) THROW 50001, @mensajeError, 1;
+		
+		-- Verificar que exista la fecha maxima de cashout en la tabla de feriados	
+		set @EsFeriado = null;
+		set ansi_warnings off;
+		SELECT @Plazo_liberacion1 = ISNULL(MAX(plazo_liberacion),1) from dbo.Plazo_liberacion
+		SELECT @Plazo_liberacion2 = ISNULL(MAX(plazo_liberacion_cuotas),1) from dbo.Plazo_liberacion
+		set ansi_warnings on;
+
+		SELECT @Plazo_liberacion = IIF(@Plazo_liberacion1 > @Plazo_liberacion2, @Plazo_liberacion1, @Plazo_liberacion2)
+		SELECT @cashoutMax = DATEADD(day, @Plazo_liberacion, CAST(GETDATE() as DATE))
+
+		SELECT @Esferiado = fro.esFeriado
+		  FROM Configurations.dbo.Feriados fro 
+		 WHERE CAST(fro.fecha AS DATE) = CAST('2017-06-15' AS DATE)
+		   AND fro.habilitado = 1;  
+
+		 SET @fechaTexto = CONVERT(char(10), @cashoutMax, 103) ;
+		 SET @mensajeError = 'No existe el registro ' + @fechaTexto + ' en la tabla de Feriados.';
+
+		IF (@Esferiado IS NULL) THROW 50001, @mensajeError, 1;
+
+
+
+
+
 
 		-- Obtener Transacciones a Liquidar        
 		EXEC @tx_count = Configurations.dbo.Batch_Liq_Obtener_Transacciones;
@@ -601,5 +650,4 @@ BEGIN
 		RETURN 0;
 	END CATCH
 END
-
 
