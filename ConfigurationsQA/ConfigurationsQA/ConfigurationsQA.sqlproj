@@ -1899,6 +1899,10 @@
     </Build>
     <Build Include="dbo\Stored Procedures\Batch_CashOut_Main.sql" />
     <Build Include="dbo\Stored Procedures\Batch_CashOut_Obtener_Cuentas.sql" />
+    <Build Include="dbo\Stored Procedures\Rendicion_de_operaciones_diarias.sql">
+      <AnsiNulls>On</AnsiNulls>
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="Transactions">
