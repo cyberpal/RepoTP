@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[Operaciones_Diarias_tmp] (
+    [filename]                VARCHAR (50) NULL,
+    [Desde]                   VARCHAR (10) NULL,
+    [Hasta]                   VARCHAR (10) NULL,
+    [Cuenta]                  VARCHAR (10) NULL,
+    [Fecha_de_cobro]          VARCHAR (10) NULL,
+    [Fecha_para_cashout]      VARCHAR (10) NULL,
+    [ID_de_operacion]         VARCHAR (10) NULL,
+    [Tipo_de_movimiento]      VARCHAR (18) NULL,
+    [Concepto]                VARCHAR (50) NULL,
+    [Cliente_email]           VARCHAR (50) NULL,
+    [Cliente_nombre_completo] VARCHAR (50) NULL,
+    [Estado]                  VARCHAR (18) NULL,
+    [Monto_Bruto]             VARCHAR (18) NULL,
+    [Monto_Neto]              VARCHAR (18) NULL,
+    [Precio_del_servicio]     VARCHAR (18) NULL,
+    [IVA_Precio_del_servicio] VARCHAR (18) NULL,
+    [Retenciones]             VARCHAR (18) NULL,
+    [Monto_Cliente]           VARCHAR (10) NULL,
+    [Cantidad_de_cuotas]      VARCHAR (3)  NULL,
+    [Medio_de_pago]           VARCHAR (20) NULL,
+    [Nro_de_tarjeta]          VARCHAR (7)  NULL,
+    [Nro_de_autorizacion]     VARCHAR (10) NULL
+);
+
