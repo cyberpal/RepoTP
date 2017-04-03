@@ -122,7 +122,8 @@ BEGIN
 				ON rgr.id_rubro = aca.id_rubro
 			LEFT JOIN Configurations.dbo.Tipo tpo
 				ON cgr.id_tipo_aplicacion = tpo.id_tipo
-			WHERE cgr.fecha_inicio_vigencia <= @CreateTimestamp
+			WHERE   cgr.fecha_baja IS NULL								--bug fix <AM> 29-03-2017 -------------
+			    AND cgr.fecha_inicio_vigencia <= @CreateTimestamp
 				AND (
 					cgr.fecha_fin_vigencia >= @CreateTimestamp
 					OR cgr.fecha_fin_vigencia IS NULL
